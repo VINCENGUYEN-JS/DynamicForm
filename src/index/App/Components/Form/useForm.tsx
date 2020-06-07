@@ -2,6 +2,33 @@ import { useReducer } from "react";
 import pipe from "lodash/fp/pipe";
 import set from "lodash/fp/set";
 
+type ElementConfig =
+  | {
+      type: string,
+      placeholder: string,
+    }
+  | {
+      options: { value: string, displayValue: string }[],
+    };
+
+interface OrderForm {
+  [name: string]: {
+    elementType: string,
+    elementConfig: ElementConfig,
+    value: string,
+    validation: {
+      required?: boolean,
+    },
+    valid: boolean,
+    touch?: boolean,
+  };
+}
+
+interface Form {
+  orderForm: OrderForm;
+  formIsValid: boolean;
+}
+
 function checkValid(value, rules) {
   let isValid = true;
   if (rules.required) {
